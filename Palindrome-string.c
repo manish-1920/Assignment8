@@ -1,15 +1,16 @@
 #include <stdio.h>
-#include <ctype.h>
 
 int main()
 {
     char str[100];
-    int i = 0, j, flag = 1;
+    int i, j, flag = 1;
 
     printf("Enter a string: ");
-    gets(str);
+    scanf("%[^\n]", str);
 
-    while (str[i] != '\0')
+    i = 0;
+
+    while(str[i] != '\0')
     {
         i++;
     }
@@ -17,9 +18,18 @@ int main()
     j = i - 1;
     i = 0;
 
-    while (i < j)
+    while(i < j)
     {
-        if (tolower(str[i]) != tolower(str[j]))
+        char a = str[i];
+        char b = str[j];
+
+        if(a >= 'A' && a <= 'Z')
+            a = a + 32;
+
+        if(b >= 'A' && b <= 'Z')
+            b = b + 32;
+
+        if(a != b)
         {
             flag = 0;
             break;
@@ -29,10 +39,10 @@ int main()
         j--;
     }
 
-    if (flag == 1)
-        printf("The string is a palindrome");
+    if(flag == 1)
+        printf("Palindrome");
     else
-        printf("The string is not a palindrome");
+        printf("Not a palindrome");
 
     return 0;
 }
