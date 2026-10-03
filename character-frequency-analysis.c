@@ -1,44 +1,51 @@
 #include <stdio.h>
-#include <ctype.h>
 
 int main()
 {
     char str[100];
     int i, j, count;
+    char ch;
 
     printf("Enter a string: ");
-    gets(str);
+    scanf("%[^\n]", str);
 
-    for (i = 0; str[i] != '\0'; i++)
+    for(i = 0; str[i] != '\0'; i++)
     {
-        if (str[i] == ' ')
+        ch = str[i];
+
+        if(ch >= 'A' && ch <= 'Z')
+            ch = ch + 32;
+
+        count = 0;
+
+        /* Check whether this character appeared earlier */
+        for(j = 0; j < i; j++)
+        {
+            char previous = str[j];
+
+            if(previous >= 'A' && previous <= 'Z')
+                previous = previous + 32;
+
+            if(previous == ch)
+                break;
+        }
+
+        if(j != i)
             continue;
 
-        count = 1;
-
-        for (j = 0; j < i; j++)
+        /* Count frequency */
+        for(j = 0; str[j] != '\0'; j++)
         {
-            if (tolower(str[i]) == tolower(str[j]))
-            {
-                count = 0;
-                break;
-            }
+            char current = str[j];
+
+            if(current >= 'A' && current <= 'Z')
+                current = current + 32;
+
+            if(current == ch)
+                count++;
         }
 
-        if (count == 1)
-        {
-            count = 0;
-
-            for (j = 0; str[j] != '\0'; j++)
-            {
-                if (tolower(str[i]) == tolower(str[j]))
-                {
-                    count++;
-                }
-            }
-
-            printf("%c = %d\n", str[i], count);
-        }
+        printf("%c = %d\n", ch, count);
     }
 
     return 0;
